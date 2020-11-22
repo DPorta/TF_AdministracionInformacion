@@ -1,0 +1,49 @@
+---
+title: "TF"
+output: html_notebook
+---
+#Inclusión de Librerías
+```{r}
+library(rvest)
+library(tidyverse)
+library(dplyr)
+library(ggplot2)
+library(stringi)
+```
+
+#Recoleccion de Datos
+```{r}
+gestantes<-read.csv("Datasets/Gestantes_Apurimac_Estado_Nutricional_2017.csv")
+donaciones<-read.csv("Datasets/pcm_donaciones.csv",sep = "|")
+```
+
+#Modelado de Datos
+```{r}
+
+```
+
+#Preparación y limpieza de los Datos
+```{r}
+donaciones<-donaciones[,c(7,10,19,28,34,36,38,40,44,45,46,47)]
+donaciones<-donaciones[-c(120:133),]
+donaciones<-donaciones[-c(509:516),]
+
+gestantes<-gestantes[,c(3,5,7:12,15:18,20,22:25)]
+gestantes$Peso[gestantes$Peso == 0.0] <- mean(gestantes$Peso,na.rm = TRUE)
+gestantes$Peso[gestantes$Peso >155] <- mean(gestantes$Peso,na.rm = TRUE)
+
+gestantes$Talla[gestantes$Talla == 0.0] <- mean(gestantes$Talla,na.rm = TRUE)
+gestantes$Talla[gestantes$Talla >200] <- mean(gestantes$Talla,na.rm = TRUE)
+
+gestantes$Edad[gestantes$Edad < 13] <- mean(gestantes$Edad,na.rm = TRUE)
+gestantes$Edad_Gestacional[gestantes$Edad_Gestacional < 13] <- mean(gestantes$Edad_Gestacional,na.rm = TRUE)
+
+gestantes$Hemoglobina[gestantes$Hemoglobina == 0.0] <- mean(gestantes$Hemoglobina,na.rm = TRUE)
+gestantes$Hbc[gestantes$Hbc == 0.0] <- mean(gestantes$Hbc,na.rm = TRUE)
+```
+
+#Exportando los nuevos Datos a una instancia 
+```{r}
+
+```
+
