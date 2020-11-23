@@ -123,78 +123,63 @@ server <- function(input, output) {
     {return(NULL)}
     
     if(box == "1")    {
-      dplyr1<- donaciones
+      dplyr1<- gestantes%>%filter(Distrito=="TINTAY"&Edad<25)
       return (dplyr1)
     } else  if(box == "2") {
-      dplyr2<- donaciones
+      dplyr2<- gestantes%>%filter(Dx_CLAP=="SobrePeso"&EESS=="C.S. BELLAVISTA")
       return (dplyr2)
     } else  if(box == "3") {
-      dplyr3<- donaciones
+      dplyr3<- gestantes%>%filter(Edad < 20)
       return (dplyr3)
     } else  if(box == "4") { 
-      dplyr4 <- donaciones
+      dplyr4 <- gestantes%>%filter(Edad > 30&Dx_CLAP=="SobrePeso")
       return (dplyr4)
     } else  if(box == "5") { 
-      dplyr5 <- donaciones
+      dplyr5 <- gestantes%>%filter(Talla < 160 & Dx_Anemia=="Anemia Moderada")
       return (dplyr5)
-    }
-    else  if(box == "6") { 
-      dplyr6 <- donaciones
+    } else  if(box == "6") { 
+      dplyr6 <- donaciones%>%filter(NOMBRE_CLASE=="BEBIDAS Y AFINES"&PLIEGO_NOMBRE=="M. DE SALUD")
       return (dplyr6)
-    } 
-    else  if(box == "7") { 
-      dplyr7 <- donaciones
+    } else  if(box == "7") { 
+      dplyr7 <- gestantes%>%filter(Provincia=="ABANCAY"&Hemoglobina > 10)
       return (dplyr7)
-    } 
-    else  if(box == "8") { 
-      dplyr8 <- donaciones
+    } else  if(box == "8") { 
+      dplyr8 <- donaciones%>%filter(CANT_ARTICULO > 100)
       return (dplyr8)
-    } 
-    else  if(box == "9") { 
-      dplyr9 <- donaciones
+    } else  if(box == "9") { 
+      dplyr9 <- gestantes%>%filter(EESS=="P.S. OCOBAMBA"&Hbc<10)
       return (dplyr9)
-    } 
-    else  if(box == "10") { 
-      dplyr10 <- donaciones
+    } else  if(box == "10") { 
+      dplyr10 <- gestantes%>%filter(Peso > 60&Distrito =="TAMBURCO"&Dx_Anemia=="Anemia Leve")
       return (dplyr10)
-    } 
-    else  if(box == "11") { 
+    } else  if(box == "11") { 
       dplyr11 <- donaciones
       return (dplyr11)
-    } 
-    else  if(box == "12") { 
+    } else  if(box == "12") { 
       dplyr12 <- donaciones
       return (dplyr12)
-    } 
-    else  if(box == "13") { 
+    } else  if(box == "13") { 
       dplyr13 <- donaciones
       return (dplyr13)
-    } 
-    else  if(box == "14") { 
+    } else  if(box == "14") { 
       dplyr14 <- donaciones
       return (dplyr14)
-    } 
-    else  if(box == "15") { 
+    } else  if(box == "15") { 
       dplyr15 <- donaciones
       return (dplyr15)
-    } 
-    else  if(box == "16") { 
+    } else  if(box == "16") { 
       dplyr16 <- donaciones
       return (dplyr16)
-    } 
-    else  if(box == "17") { 
+    } else  if(box == "17") { 
       dplyr17 <- donaciones
       return (dplyr17)
-    } 
-    else  if(box == "18") { 
+    } else  if(box == "18") { 
       dplyr18 <- donaciones
       return (dplyr18)
-    } 
-    else  if(box == "19") { 
+    } else  if(box == "19") { 
       dplyr19 <- donaciones
       return (dplyr19)
-    } 
-    else  if(box == "20") { 
+    } else  if(box == "20") { 
       dplyr20 <- donaciones
       return (dplyr20)
     } 
@@ -208,33 +193,75 @@ server <- function(input, output) {
   
   #GRAFICOS
   output$plot1 <- renderPlot({
-    box<- input$selectgg
+    box<- input$selectdp
     if (is.null(box))
     {return(NULL)}
     
     if(box == "1")    {
-      gr1<- donaciones 
-      
-      return (gp1)
-    } else{  if(box == "2") {
-      gr2<- donaciones 
-      return (gp2)
-    } else { if(box == "3") {
-      gr3<-donaciones 
-      return (gp3)
-    } else { if(box == "4") { 
-      gp4<-
-        return (gp4)
-    } else { if(box=="5") { ç
-      gr5<- 
-        return (gp5)
+      gr1<- donaciones
+      return (gr1)
+    } else  if(box == "2") {
+      gr2<- donaciones
+      return (gr2)
+    } else  if(box == "3") {
+      gr3<- donaciones
+      return (gr3)
+    } else  if(box == "4") { 
+      gr4 <- donaciones
+      return (gr4)
+    } else  if(box == "5") { 
+      gr5 <- donaciones
+      return (gr5)
+    } else  if(box == "6") { 
+      gr6 <- donaciones
+      return (gr6)
+    } else  if(box == "7") { 
+      gr7 <- donaciones
+      return (gr7)
+    } else  if(box == "8") { 
+      gr8 <- donaciones
+      return (gr8)
+    } else  if(box == "9") { 
+      gr9 <- donaciones
+      return (gr9)
+    } else  if(box == "10") { 
+      gr10 <- donaciones
+      return (gr10)
+    } else  if(box == "11") { 
+      gr11 <- donaciones
+      return (gr11)
+    } else  if(box == "12") { 
+      gr12 <- donaciones
+      return (gr12)
+    } else  if(box == "13") { 
+      gr13 <- donaciones
+      return (gr13)
+    } else  if(box == "14") { 
+      gr14 <- donaciones
+      return (gr14)
+    } else  if(box == "15") { 
+      gr15 <- donaciones
+      return (gr15)
+    } else  if(box == "16") { 
+      gr16 <- donaciones
+      return (gr16)
+    } else  if(box == "17") { 
+      gr17 <- donaciones
+      return (gr17)
+    } else  if(box == "18") { 
+      gr18 <- donaciones
+      return (gr18)
+    } else  if(box == "19") { 
+      gr19 <- donaciones
+      return (gr19)
+    } else  if(box == "20") { 
+      gr20 <- donaciones
+      return (gr20)
     } 
-    } }
-    } } })
-  output$consulta4 <- renderText({
-    "  colocar el codigo de la consulta por ejemplo:
-  gr1<- donaciones  %>% filter(MesEmergencia<5)%>% group_by(DesGrupo)
-    gp1 <- ggplot(gr1, aes(x=CodGrupo)) + geom_bar( width=0.5, colour='blue', fill='gray')+ facet_grid(MesEmergencia ~.)
+    })
+  output$consulta3 <- renderText({
+    " 
+    Codigo de Graficos aqui
     
     "
   })
