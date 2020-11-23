@@ -18,7 +18,7 @@ source("www/modelo.R")
 
 ui <- fluidPage(
   theme = shinytheme("cyborg"),
-  titlePanel( "Proyecto Emergencias del Peru-Obtenido de Datos abiertos"),
+  titlePanel( "Trabajo Final de Admin de la Informacion"),
   tabsetPanel(
               tabPanel("Presentacion",introduccion),
               tabPanel("Recoleccion",recoleccion),
