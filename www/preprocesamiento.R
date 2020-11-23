@@ -1,6 +1,16 @@
 #imputacion, anomalos, outliers
-preprocesamiento<-{navlistPanel(
-  tabPanel("Limpieza e Imputacion",
-           h4("Unir Dataset's Separados"),hr(),checkboxInput("control1", "Mostrar Codigo", FALSE),hr(),
-           verbatimTextOutput("consulta1"), tableOutput("tablaS5")))
+preprocesamiento<-{sidebarLayout(
+  sidebarPanel(
+    
+    actionButton("control1", "Mostrar Codigo"),
+    hr(),
+    verbatimTextOutput("consulta1")
+  ),
+  mainPanel(
+    radioButtons("selectPre",label = h3("Escoger Dataset limpio"),choices = c("Donaciones"="1","Gestantes"="2")),
+    hr(),
+    tableOutput("tablaS5"))
+  
+  )
+  
 }
