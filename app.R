@@ -312,22 +312,33 @@ server <- function(input, output) {
       gr14 <- ggplot(dplyr14_A, aes(y=total, x =Fecha,fill=Fecha))+geom_jitter()+theme(axis.text.x=element_blank(),legend.title =  element_blank())+labs(title="Consultas por Fecha en Junio de 2017",x="Fecha",y="Total")
       return (gr14)
     } else  if(box == "15") { 
-      gr15 <- donaciones
+      gr15 <- ggplot(dplyr15, aes(x="", y=NOMBRE_GRUPO, fill=NOMBRE_GRUPO)) +
+        geom_bar(stat="identity") +
+        coord_polar("y", start=0) +
+        theme_void()+labs(title="Distribucion de Productos donados en Marzo 2020")
       return (gr15)
     } else  if(box == "16") { 
-      gr16 <- donaciones
+      gr16 <-  ggplot(dplyr16, aes(x="", y=NOMBRE_CLASE, fill=NOMBRE_CLASE)) +
+        geom_bar(stat="identity") +
+        coord_polar("y", start=0) +
+        theme_void()+labs(title="Tipo de productos medicos donados")
       return (gr16)
     } else  if(box == "17") { 
-      gr17 <- donaciones
+      gr17 <- ggplot(dplyr17, aes(x = Provincia, y=total,fill=Provincia))+geom_bar(stat="identity")+theme(axis.text.x=element_blank(),legend.title =  element_blank())+labs(title="Provincias con mayor cantidad de gestantes",x="Provincias",y="Cantidad")
       return (gr17)
     } else  if(box == "18") { 
-      gr18 <- donaciones
+      dplyr18_A<-gestantes%>%filter(Provincia=="ABANCAY")
+      gr18 <- ggplot(dplyr18_A,aes(x=Distrito,y=Edad,fill=Distrito))+geom_boxplot()+theme(axis.text.x=element_blank(),legend.title =  element_blank())+labs(title="Distribucion de edades por distrito en la provincia Abancay",x="Distrito",y="Edad")
       return (gr18)
     } else  if(box == "19") { 
-      gr19 <- donaciones
+      dplyr19_A<-gestantes%>%filter(Dx_CLAP=="SobrePeso"&Peso>40&Provincia=="ANDAHUAYLAS")
+      gr19 <- ggplot(dplyr19_A, aes(x="", y=EESS, fill=EESS)) +
+        geom_bar(stat="identity") +
+        coord_polar("y", start=0) +
+        theme_void()+labs(title="Gestantes con sobrepeso mayores a 30 de Andahuaylas segun Centro de Atencion")
       return (gr19)
     } else  if(box == "20") { 
-      gr20 <- donaciones
+      gr20 <- ggplot(dplyr20,aes(x=Distrito,y=Talla,fill=Distrito))+geom_boxplot()+theme(axis.text.x=element_blank(),legend.title =  element_blank())+labs(title="Madres de Cotabamba atendidas en Enero de 2017 segun talla y Distrito",x="Distrito",y="Talla")
       return (gr20)
     } 
     })
