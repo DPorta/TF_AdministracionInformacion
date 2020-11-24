@@ -285,20 +285,24 @@ server <- function(input, output) {
       gr5 <- ggplot(dplyr5_A, aes(x=Dx_Anemia, y = Hemoglobina, fill(Hemoglobina)))+geom_violin()+geom_point(aes(color = Hemoglobina))+labs(title="Gestantes que presentan algun tipo de Anemia en base a su Talla",x="Tipo de Anemia",y="Hemoglobina")
       return (gr5)
     } else  if(box == "6") { 
-      dplyr6_A<-donaciones%>%filter(NOMBRE_PROVEEDOR == "PERU COMPRAS")%>%group_by(CANT_ARTICULO)
-      gr6 <- ggplot(dplyr6_A,aes(x =NOMBRE_PROVEEDOR, y = CANT_ARTICULO, fill=NOMBRE_ITEM))+geom_bar(stat = "identity")
+      dplyr6_A<-gestantes%>%filter(Distrito == "PICHIRHUA")%>%group_by(PPG)
+      gr6<-ggplot(dplyr6_A, aes(x = PPG, y = Distrito, fill =PPG))+geom_jitter(aes(color = PPG))+labs(title="Dispercion de Gestantes segun PPG en el Distrito Pichirhua",x="PPC",y="Distrito")
       return (gr6)
     } else  if(box == "7") { 
-      gr7 <- donaciones
+      dplyr7_A<-gestantes%>%filter(Provincia == "ABANCAY")%>%group_by(Dx_IOM)
+      gr7 <- ggplot(dplyr7_A, aes(x =Provincia, y = Dx_IOM, fill = Dx_IOM))+geom_bar(stat = "identity")+coord_polar("y", start = 0)+theme(axis.text.x=element_blank(),legend.title =  element_blank())+labs(title="Tipo de Embarazo en la provincia de Abancay",y="Tipo Embarazo")
       return (gr7)
     } else  if(box == "8") { 
-      gr8 <- donaciones
+      dplyr8_A<-gestantes%>%filter(Edad > 16 & Edad < 25)%>%group_by(Dx_Anemia)
+      gr8 <-ggplot(dplyr8_A, aes(x = Dx_Anemia, y = Edad, fill = Dx_Anemia))+geom_jitter(aes(color = Dx_Anemia))+labs(title="Anemia segun rango de edad de 16 a 25",y="Edad", x = "Tipo de Anemia")
       return (gr8)
     } else  if(box == "9") { 
-      gr9 <- donaciones
+      dplyr9_A<-gestantes%>%filter(Hbc<10)%>%group_by(Distrito)
+      gr9 <- ggplot(dplyr9_A,aes(x = Distrito, y = Hbc, fill = Distrito))+ geom_bar(stat = "identity")+theme(axis.text.x=element_blank(),legend.title =  element_blank())+labs(title="Distritos con HBC < 10",x="Distrito",y="Hbc")
       return (gr9)
     } else  if(box == "10") { 
-      gr10 <- donaciones
+      dplyr_10A<-gestantes%>%filter(Hemoglobina >3)%>%filter(Peso>50 &Peso <100)
+      gr10 <- ggplot(dplyr_10A, aes(x = Peso, y = Hemoglobina, fill=Peso))+geom_jitter(aes(color = Peso))
       return (gr10)
     } else  if(box == "11") { 
       gr11 <- ggplot(dplyr11, aes(x = PLIEGO_NOMBRE, y=total,fill=PLIEGO_NOMBRE))+geom_bar(stat="identity")+theme(axis.text.x=element_blank(),legend.title =  element_blank())+labs(title="Institucion que mas aporto",x="Institucion",y="Total")
@@ -352,10 +356,102 @@ server <- function(input, output) {
     } 
     })
   output$consulta3 <- renderText({
-    " 
-    Codigo de Graficos aqui
-    
-    "
+    '
+    if(box == "1")    {
+      dplyr1_A<-gestantes%>%group_by(Distrito)%>%summarise(total=n())
+      gr1<- ggplot(dplyr1_A, aes(x="",y=total, fill=Distrito))+
+        geom_bar(stat="identity") +
+        coord_polar("y", start=0) +
+        theme_void()+labs(title="Distribucion de gestantes por distritos")
+      return (gr1)
+    } else  if(box == "2") {
+      dplyr2_B<- gestantes%>%group_by(Dx_CLAP)%>%filter(EESS=="C.S. BELLAVISTA")
+      gr2<-ggplot(dplyr2_B, aes(x=Dx_CLAP,y=NCOL(EESS),fill=Dx_CLAP))+
+        geom_bar(stat="identity")+theme(axis.text.x=element_blank(),legend.title =  element_blank())+labs(title="Gesante con Transtonos alimenticios del C.S.Bellavista",y="C.S. BELLAVISTA")
+      return (gr2)
+    } else  if(box == "3") {
+      dplyr3_A<-gestantes%>%filter(str_detect(Fecha,"/01/2017"))%>%filter(Edad < 20)
+      gr3<-ggplot(dplyr3_A,aes(x =Fecha, y = Edad, fill=Fecha))+ geom_step(direction = "hv")+theme(axis.text.x=element_blank(),legend.title =  element_blank())+labs(title="Gestantes que se atendieron en el mes de enero en funcion a su edad",x="Fecha",y="Edad")
+      return (gr3)
+    } else  if(box == "4") { 
+      dplyr4_A<-gestantes%>%filter(Edad_Gestacional>30)%>%group_by(Dx_CLAP)
+      gr4 <- ggplot(dplyr4_A, aes(x=Edad_Gestacional, y = Dx_CLAP, fill=Edad_Gestacional))+geom_point(stat="Identity",position = "jitter", aes(color = Edad_Gestacional))+labs(title="Gestantes Mayores de 30 en funcion a las conclusiones de su peso",x="Edad Gestacional",y="Dx_CLAP")
+      return (gr4)
+    } else  if(box == "5") { 
+      dplyr5_A<-gestantes%>%filter(Hemoglobina<15 & Hemoglobina>5)%>%group_by(Dx_Anemia)
+      gr5 <- ggplot(dplyr5_A, aes(x=Dx_Anemia, y = Hemoglobina, fill(Hemoglobina)))+geom_violin()+geom_point(aes(color = Hemoglobina))+labs(title="Gestantes que presentan algun tipo de Anemia en base a su Talla",x="Tipo de Anemia",y="Hemoglobina")
+      return (gr5)
+    } else  if(box == "6") { 
+      dplyr6_A<-gestantes%>%filter(Distrito == "PICHIRHUA")%>%group_by(PPG)
+      gr6<-ggplot(dplyr6_A, aes(x = PPG, y = Distrito, fill =PPG))+geom_jitter(aes(color = PPG))+labs(title="Dispercion de Gestantes segun PPG en el Distrito Pichirhua",x="PPC",y="Distrito")
+      return (gr6)
+    } else  if(box == "7") { 
+      dplyr7_A<-gestantes%>%filter(Provincia == "ABANCAY")%>%group_by(Dx_IOM)
+      gr7 <- ggplot(dplyr7_A, aes(x =Provincia, y = Dx_IOM, fill = Dx_IOM))+geom_bar(stat = "identity")+coord_polar("y", start = 0)+theme(axis.text.x=element_blank(),legend.title =  element_blank())+labs(title="Tipo de Embarazo en la provincia de Abancay",y="Tipo Embarazo")
+      return (gr7)
+    } else  if(box == "8") { 
+      dplyr8_A<-gestantes%>%filter(Edad > 16 & Edad < 25)%>%group_by(Dx_Anemia)
+      gr8 <-ggplot(dplyr8_A, aes(x = Dx_Anemia, y = Edad, fill = Dx_Anemia))+geom_jitter(aes(color = Dx_Anemia))+labs(title="Anemia segun rango de edad de 16 a 25",y="Edad", x = "Tipo de Anemia")
+      return (gr8)
+    } else  if(box == "9") { 
+      dplyr9_A<-gestantes%>%filter(Hbc<10)%>%group_by(Distrito)
+      gr9 <- ggplot(dplyr9_A,aes(x = Distrito, y = Hbc, fill = Distrito))+ geom_bar(stat = "identity")+theme(axis.text.x=element_blank(),legend.title =  element_blank())+labs(title="Distritos con HBC < 10",x="Distrito",y="Hbc")
+      return (gr9)
+    } else  if(box == "10") { 
+      dplyr_10A<-gestantes%>%filter(Hemoglobina >3)%>%filter(Peso>50 &Peso <100)
+      gr10 <- ggplot(dplyr_10A, aes(x = Peso, y = Hemoglobina, fill=Peso))+geom_jitter(aes(color = Peso))
+      return (gr10)
+    } else  if(box == "11") { 
+      gr11 <- ggplot(dplyr11, aes(x = PLIEGO_NOMBRE, y=total,fill=PLIEGO_NOMBRE))+geom_bar(stat="identity")+theme(axis.text.x=element_blank(),legend.title =  element_blank())+labs(title="Institucion que mas aporto",x="Institucion",y="Total")
+      return (gr11)
+    } else  if(box == "12") { 
+      dplyr12_A<-gestantes%>%group_by(Dx_Anemia)%>%summarise(total=n())
+      gr12 <- ggplot(dplyr12_A, aes(x="", y=total, fill=Dx_Anemia)) +
+        geom_bar(stat="identity") +
+        coord_polar("y", start=0) +
+        theme_void()+labs(title="Distribucion de Anemia entre las Gestantes")
+      return (gr12)
+    } else  if(box == "13") { 
+      gr13 <- ggplot(dplyr13, aes(x="", y=NOMBRE_PROVEEDOR, fill=NOMBRE_PROVEEDOR)) +
+        geom_bar(stat="identity") +
+        coord_polar("y", start=0) +
+        theme_void()+labs(title="Distribucion de Proveedores de CENARES")
+      return (gr13)
+    } else  if(box == "14") { 
+      dplyr14_A<-dplyr14%>%group_by(Fecha)%>%summarise(total=n())
+      gr14 <- ggplot(dplyr14_A, aes(y=total, x =Fecha,fill=Fecha))+geom_jitter()+theme(axis.text.x=element_blank(),legend.title =  element_blank())+labs(title="Consultas por Fecha en Junio de 2017",x="Fecha",y="Total")
+      return (gr14)
+    } else  if(box == "15") { 
+      gr15 <- ggplot(dplyr15, aes(x="", y=NOMBRE_GRUPO, fill=NOMBRE_GRUPO)) +
+        geom_bar(stat="identity") +
+        coord_polar("y", start=0) +
+        theme_void()+labs(title="Distribucion de Productos donados en Marzo 2020")
+      return (gr15)
+    } else  if(box == "16") { 
+      gr16 <-  ggplot(dplyr16, aes(x="", y=NOMBRE_CLASE, fill=NOMBRE_CLASE)) +
+        geom_bar(stat="identity") +
+        coord_polar("y", start=0) +
+        theme_void()+labs(title="Tipo de productos medicos donados")
+      return (gr16)
+    } else  if(box == "17") { 
+      gr17 <- ggplot(dplyr17, aes(x = Provincia, y=total,fill=Provincia))+geom_bar(stat="identity")+theme(axis.text.x=element_blank(),legend.title =  element_blank())+labs(title="Provincias con mayor cantidad de gestantes",x="Provincias",y="Cantidad")
+      return (gr17)
+    } else  if(box == "18") { 
+      dplyr18_A<-gestantes%>%filter(Provincia=="ABANCAY")
+      gr18 <- ggplot(dplyr18_A,aes(x=Distrito,y=Edad,fill=Distrito))+geom_boxplot()+theme(axis.text.x=element_blank(),legend.title =  element_blank())+labs(title="Distribucion de edades por distrito en la provincia Abancay",x="Distrito",y="Edad")
+      return (gr18)
+    } else  if(box == "19") { 
+      dplyr19_A<-gestantes%>%filter(Dx_CLAP=="SobrePeso"&Peso>40&Provincia=="ANDAHUAYLAS")
+      gr19 <- ggplot(dplyr19_A, aes(x="", y=EESS, fill=EESS)) +
+        geom_bar(stat="identity") +
+        coord_polar("y", start=0) +
+        theme_void()+labs(title="Gestantes con sobrepeso mayores a 30 de Andahuaylas segun Centro de Atencion")
+      return (gr19)
+    } else  if(box == "20") { 
+      gr20 <- ggplot(dplyr20,aes(x=Distrito,y=Talla,fill=Distrito))+geom_boxplot()+theme(axis.text.x=element_blank(),legend.title =  element_blank())+labs(title="Madres de Cotabamba atendidas en Enero de 2017 segun talla y Distrito",x="Distrito",y="Talla")
+      return (gr20)
+    } 
+    })'
   })
   
   #MODELOS
