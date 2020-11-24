@@ -44,7 +44,7 @@ gestantes$Hbc[gestantes$Hbc == 0.0] <- mean(gestantes$Hbc,na.rm = TRUE)
 
 #Exportando los nuevos Datos a una instancia 
 ```{r}
-view(gestantes)
+View(gestantes)
 view(donaciones)
 ```
 
