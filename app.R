@@ -473,8 +473,11 @@ ggplot(dtModeloR2, aes(x=AHumanitarFam, y=EDanosVivienda)) + geom_point() + ggti
   })
   output$plot8 <- renderPlot({
     
+    dtModelo1<-data.frame(gestantes%>%group_by(Distrito)%>%summarise(hemoglobina=sum(Hemoglobina), peso = sum(Peso)))
     
-    return( )
+    return(
+      ggplot(dtModelo1, aes(x=hemoglobina, y=peso)) + geom_point() + ggtitle("Grafica de Regresion") + xlab("Hemoglobina") + ylab("Peso") + geom_smooth(method=lm)
+    )
     
   })
 
