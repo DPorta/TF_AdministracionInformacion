@@ -1,0 +1,12 @@
+name: TF_AdmiInfo
+title: TF_AdmiInfo
+username:
+account: dporta
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 3300054
+bundleId: 3904231
+url: https://dporta.shinyapps.io/TF_AdmiInfo/
+when: 1606304902.62574
+asMultiple: FALSE
+asStatic: FALSE
