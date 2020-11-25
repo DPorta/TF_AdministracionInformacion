@@ -1,3 +1,5 @@
+#LIBRERIAS
+############
 library(ggplot2)
 library(shinyjs)#para la funcion toggle
 library(shiny)
@@ -13,7 +15,15 @@ library(rvest)
 library(DBI)
 library(RMySQL)
 library(DMwR)
+library(corrplot)
 
+
+
+
+
+##########################
+#SOURCES
+##########################
 source("www/introduccion.R")
 source("www/recoleccion.R")
 source("www/preprocesamiento.R")
@@ -22,6 +32,8 @@ source("www/graficos.R")
 source("www/modelo.R")
 source("www/credenciales.R")
 source("myLibrary.R")
+
+###################
 
 
 ui <- fluidPage(
@@ -555,7 +567,16 @@ server <- function(input, output) {
       gg1<-ggplot(gestantes, aes(x=Hemoglobina, y=Hbc)) + geom_point() + ggtitle("Grafica de Regresion: Hemoglobina vs Hbc") + xlab("Hemoglobina") + ylab("Peso") + geom_smooth(method=lm)
       return (gg1)
     } else  if(box == "2") {
-      gg2<-gg1
+      xT<-c()
+      yT<-c()
+      newDf<-data.frame(xT,yT)
+      xT<-gestantes[,4]
+      yT<-gestantes[,7]
+      newDf<-data.frame(xT,yT)
+      
+      newDf=etiquetar(newDf)
+      knnPlot<-ggplot(data = newDf, aes(x=xT, y = yT, color=categorias))+geom_point()+xlab("Edad")+ylab("Talla")+ggtitle("Clasificador KNN de Edad vs Talla")
+      gg2<-knnPlot
       return (gg2)
     } else  if(box == "3") {
       gg3<-gg1
@@ -566,6 +587,32 @@ server <- function(input, output) {
     }
     
   })
+  
+  output$modeloTextG<-renderText({
+    
+    box<- input$selectMo
+    if (is.null(box))
+    {return(NULL)}
+    
+    if(box == "1")    {
+      ""
+    } else  if(box == "2") {
+      output$modeloText<-renderText({
+        'Segun los datos ingresados, la categoria es: '
+      })
+      output$modeloText2<-renderText({
+        knn(newDf,15,153)
+      })
+    } else  if(box == "3") {
+      ""
+    } else  if(box == "4") { 
+      ""
+    }
+    
+    
+  })
+    
+
   output$plot9 <- renderDataTable({
     #limpieza
     donaciones<-donaciones[,c(7,10,19,28,34,36,38,40,44,45,46,47)]
@@ -596,7 +643,11 @@ server <- function(input, output) {
       dT1<-regresion(gestantes$Hemoglobina,gestantes$Hbc,8)
       return (dT1)
     } else  if(box == "2") {
-      dT2<-knn(df,35,70,1)
+      #Datos para entrenamiento ids=sample(1:nrow(newDf),0.85*nrow(newDf))
+      dfEnt<-newDf[ids,]
+      dfTest<-newDf[-ids,]
+      dfTemp=newDf
+      dT2<-dfTemp
       return (dT2)
     } else  if(box == "3") {
       dT3<-dT1
