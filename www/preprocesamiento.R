@@ -4,6 +4,10 @@ preprocesamiento<-{sidebarLayout(
     
     actionButton("control1", "Mostrar Codigo"),
     hr(),
+    actionButton("controlDon", "Guardar Donaciones"),
+    hr(),
+    actionButton("controlGes", "Guardar Gestantes"),
+    hr(),
     verbatimTextOutput("consulta1")
   ),
   mainPanel(

@@ -10,6 +10,9 @@ library(shinythemes)
 library(tidyverse)
 library(RColorBrewer)
 library(rvest)
+library(DBI)
+library(RMySQL)
+library(DMwR)
 
 source("www/introduccion.R")
 source("www/recoleccion.R")
@@ -24,6 +27,7 @@ source("myLibrary.R")
 ui <- fluidPage(
   theme = shinytheme("superhero"),
   titlePanel( "Trabajo Final de Admin de la Informacion"),
+  hr(),
   tabsetPanel(
               tabPanel("Presentacion",introduccion),
               tabPanel("Recoleccion",recoleccion),
@@ -43,14 +47,14 @@ server <- function(input, output) {
   donaciones<- read.csv('Datasets/pcm_donaciones.csv',sep="|")
   gestantes<-read.csv("Datasets/Gestantes_Apurimac_Estado_Nutricional_2017.csv")
   
-  if(dbCanConnect(drv=driver,port=port,user=user,host=host, password=password,dbname=dbname)){
+  
+  #CONEXION A DATABASE
+  if(dbCanConnect(drv=driver,port=port,user=user,host=host, 
+                  password=password,dbname=dbname)){
     conexion<-dbConnect(drv=driver,port=port,user=user,host=host,
                         password=password,
                         dbname=dbname) 
   }
-  #CODIGO DE CREACION DE DATA BASE SOBRE DONACIONES
-  
-  #IMPLEMENTACION DE LAS RELACIONES
   
   #RECOLECCION
   output$tablaS2 <- renderTable({
@@ -100,6 +104,13 @@ server <- function(input, output) {
       gestantes$Hbc[gestantes$Hbc == 0.0] <- mean(gestantes$Hbc,na.rm = TRUE)'
     })
   })
+  observeEvent(input$controlDon, {
+    write.csv(donaciones,"BackUp/donaciones.csv")
+  })
+  observeEvent(input$controlGes, {
+    write.csv(gestantes,"BackUp/gestantes.csv")
+  })
+  
   output$tablaS5 <- renderTable({
     
     
