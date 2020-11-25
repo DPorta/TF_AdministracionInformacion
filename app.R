@@ -17,6 +17,7 @@ source("www/preprocesamiento.R")
 source("www/consultas.R")
 source("www/graficos.R")
 source("www/modelo.R")
+source("www/credenciales.R")
 source("myLibrary.R")
 
 
@@ -42,7 +43,14 @@ server <- function(input, output) {
   donaciones<- read.csv('Datasets/pcm_donaciones.csv',sep="|")
   gestantes<-read.csv("Datasets/Gestantes_Apurimac_Estado_Nutricional_2017.csv")
   
- 
+  if(dbCanConnect(drv=driver,port=port,user=user,host=host, password=password,dbname=dbname)){
+    conexion<-dbConnect(drv=driver,port=port,user=user,host=host,
+                        password=password,
+                        dbname=dbname) 
+  }
+  #CODIGO DE CREACION DE DATA BASE SOBRE DONACIONES
+  
+  #IMPLEMENTACION DE LAS RELACIONES
   
   #RECOLECCION
   output$tablaS2 <- renderTable({
