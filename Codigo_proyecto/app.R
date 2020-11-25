@@ -16,8 +16,9 @@ library(DBI)
 library(RMySQL)
 library(DMwR)
 library(corrplot)
-
-
+library(gplots)
+library(ggpubr)
+library(factoextra)
 
 
 
@@ -535,7 +536,39 @@ server <- function(input, output) {
   #MODELOS
   
   output$consulta6 <- renderText({
-    "SOY UN TEXTITO    "
+    'if(box == "1")    {
+      #corrplot(cor(gestantes[,c(4,6,7,13,14)]))
+      gg1<-ggplot(gestantes, aes(x=Hemoglobina, y=Hbc)) + geom_point() + ggtitle("Grafica de Regresion: Hemoglobina vs Hbc") + xlab("Hemoglobina") + ylab("Peso") + geom_smooth(method=lm)
+      return (gg1)
+    } else  if(box == "2") {
+      xT<-c()
+      yT<-c()
+      newDf<-data.frame(xT,yT)
+      xT<-gestantes[,4]
+      yT<-gestantes[,7]
+      newDf<-data.frame(xT,yT)
+      
+      newDf=etiquetar(newDf)
+      knnPlot<-ggplot(data = newDf, aes(x=xT, y = yT, color=categorias))+geom_point()+xlab("Edad")+ylab("Talla")+ggtitle("Clasificador KNN de Edad vs Talla")
+      gg2<-knnPlot
+      return (gg2)
+    } else  if(box == "3") {
+      set.seed(666)
+      kmeanGraph<-kmeans(scale(gestantes[, c(4,6,13)]), 2, nstart = 25)
+      gg3<-fviz_cluster(kmeanGraph, data = gestantes[, c(4,6,13)],
+                        palette = c("#2E9FDF", "#00AFBB", "#E7B800"), 
+                        geom = "point",
+                        ellipse.type = "convex", 
+                        ggtheme = theme_bw(),
+                        main = "Agrupamiento según edad, peso y hemoglobina para k = 2"
+      )
+      return (gg3)
+    } else  if(box == "4") { 
+      regre_multi_hemoglobina<-lm(data = gestantes,gestantes$Hemoglobina~gestantes$Hbc+gestantes$Peso+gestantes$Talla)
+      gg4<-ggplot(data=regre_multi_hemoglobina,aes(x = regre_multi_hemoglobina$fitted.values,y = regre_multi_hemoglobina$residuals))+
+        geom_point() + geom_smooth()+xlab("Hbc+Peso+Talla")+ylab("Hemoglobina")+ggtitle("Regresion Multivariable Hemoglobina vs Hbc+Peso+Talla")
+      return (gg4)
+    }'
   })
   output$plot8 <- renderPlot({
     #limpieza
@@ -564,6 +597,7 @@ server <- function(input, output) {
     {return(NULL)}
     
     if(box == "1")    {
+      #corrplot(cor(gestantes[,c(4,6,7,13,14)]))
       gg1<-ggplot(gestantes, aes(x=Hemoglobina, y=Hbc)) + geom_point() + ggtitle("Grafica de Regresion: Hemoglobina vs Hbc") + xlab("Hemoglobina") + ylab("Peso") + geom_smooth(method=lm)
       return (gg1)
     } else  if(box == "2") {
@@ -579,15 +613,24 @@ server <- function(input, output) {
       gg2<-knnPlot
       return (gg2)
     } else  if(box == "3") {
-      gg3<-gg1
+      set.seed(666)
+      kmeanGraph<-kmeans(scale(gestantes[, c(4,6,13)]), 2, nstart = 25)
+      gg3<-fviz_cluster(kmeanGraph, data = gestantes[, c(4,6,13)],
+                        palette = c("#2E9FDF", "#00AFBB", "#E7B800"), 
+                        geom = "point",
+                        ellipse.type = "convex", 
+                        ggtheme = theme_bw(),
+                        main = "Agrupamiento según edad, peso y hemoglobina para k = 2"
+      )
       return (gg3)
     } else  if(box == "4") { 
-      gg4<-gg1
+      regre_multi_hemoglobina<-lm(data = gestantes,gestantes$Hemoglobina~gestantes$Hbc+gestantes$Peso+gestantes$Talla)
+      gg4<-ggplot(data=regre_multi_hemoglobina,aes(x = regre_multi_hemoglobina$fitted.values,y = regre_multi_hemoglobina$residuals))+
+        geom_point() + geom_smooth()+xlab("Hbc+Peso+Talla")+ylab("Hemoglobina")+ggtitle("Regresion Multivariable Hemoglobina vs Hbc+Peso+Talla")
       return (gg4)
     }
     
   })
-  
   output$modeloTextG<-renderText({
     
     box<- input$selectMo
@@ -595,24 +638,22 @@ server <- function(input, output) {
     {return(NULL)}
     
     if(box == "1")    {
-      ""
-    } else  if(box == "2") {
+      " "
+    } else if(box == "2") {
       output$modeloText<-renderText({
         'Segun los datos ingresados, la categoria es: '
       })
       output$modeloText2<-renderText({
         knn(newDf,15,153)
       })
-    } else  if(box == "3") {
-      ""
-    } else  if(box == "4") { 
-      ""
+    } else if(box == "3") {
+      " "
+    } else if(box == "4") { 
+      " "
     }
     
     
   })
-    
-
   output$plot9 <- renderDataTable({
     #limpieza
     donaciones<-donaciones[,c(7,10,19,28,34,36,38,40,44,45,46,47)]
@@ -650,15 +691,14 @@ server <- function(input, output) {
       dT2<-dfTemp
       return (dT2)
     } else  if(box == "3") {
-      dT3<-dT1
+      dT3<-NULL
       return (dT3)
     } else  if(box == "4") { 
-      dT4<-dT1
+      dT4<-NULL
       return (dT4)
     }
     
   })
-  
 }
 
 # Run the application 

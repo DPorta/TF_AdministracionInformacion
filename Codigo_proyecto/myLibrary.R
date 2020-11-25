@@ -69,11 +69,30 @@ knn<-function(dfTemp,newx,newy){
 }
 
 ######################################################
-#SVM
-#codigo aca
+#KMEANS
+obtenerKpuntos<-function(df, k){
+  ids<-sample(x = 1:NROW(df),k)
+  return (df[ids,])
+}
+euclidiana<-function(pA,pB) {
+  return (sqrt((pA$x-pB$x)^2+(pA$y-pB$y)^2))
+}
+calcularDistancias<-function(df,puntos){
+  dtemp<-df
+  for(i in 1:NROW(puntos))
+    dtemp[,i+NCOL(df)]<-euclidiana(df,puntos[i,])
+  return (dtemp) 
+}
+obtenerGrupos<-function(m){
+  matriz<-apply(m,1,min)==m
+  grupos<-rep(-1,NROW(m))
+  for(i in 1:NCOL(matriz))
+    grupos[matriz[,i]]=i
+  return (grupos)
+}
 ###################################################
 
 ###########################################
-#ALGO
-#codigo aca
+#REGRESION MULTIVARIABLE
+#Funcion utilizada ---> lm()
 ####################################
