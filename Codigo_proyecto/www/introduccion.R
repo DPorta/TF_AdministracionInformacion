@@ -1,6 +1,7 @@
 introduccion<-{
   fluidRow(
     column(12,align="left",h2("Universidad Peruana de Ciencias Aplicadas"),
+               
            column(12,tags$img(src="datascience.jpg",width="40%")),
            column(6,align="left",br(),h4("Descripcion del Proyecto"),
            tags$b(h4("El proyecto consiste en el desarrollo de un producto de software relacionado a ciencia de datos,

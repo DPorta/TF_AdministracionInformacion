@@ -1,8 +1,8 @@
 # TRABAJO FINAL
 
 ##### INTEGRANTES
-###### Gómez, Aldo
-###### Porta, David
+###### Gómez Lozano, Aldo Jhair
+###### Porta Montes, David Obhed
 
 
 ### Introducción

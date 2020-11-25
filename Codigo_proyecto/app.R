@@ -27,6 +27,9 @@ source("myLibrary.R")
 ui <- fluidPage(
   theme = shinytheme("superhero"),
   titlePanel( "Trabajo Final de Admin de la Informacion"),
+  p("Revisa nuestro ",
+    a("informe",href="https://github.com/DPorta/TF_AdministracionInformacion/blob/main/Documentacion/InformeTF.md")),
+  
   hr(),
   tabsetPanel(
               tabPanel("Presentacion",introduccion),
@@ -110,7 +113,6 @@ server <- function(input, output) {
   observeEvent(input$controlGes, {
     write.csv(gestantes,"BackUp/gestantes.csv")
   })
-  
   output$tablaS5 <- renderTable({
     
     
