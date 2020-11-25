@@ -43,4 +43,22 @@ dbWriteTable(conexion,name = "total",value = total)
 
 #IMPLEMENTACION DE LAS RELACIONES
 ######################################################
-
+dbExecute(conexion, sprintf("ALTER TABLE pliego ADD PRIMARY KEY(c_pliego)"))
+dbExecute(conexion, sprintf("ALTER TABLE ejecutora ADD PRIMARY KEY(c_ejecutora)"))
+dbExecute(conexion, sprintf("ALTER TABLE proveedor ADD PRIMARY KEY(c_proveedor)"))
+dbExecute(conexion, sprintf("ALTER TABLE grupo ADD PRIMARY KEY(c_grupo)"))
+dbExecute(conexion, sprintf("ALTER TABLE clase ADD PRIMARY KEY(c_clase)"))
+dbExecute(conexion, sprintf("ALTER TABLE familia ADD PRIMARY KEY(c_familia)"))
+dbExecute(conexion, sprintf("ALTER TABLE item ADD PRIMARY KEY(c_item)"))
+dbExecute(conexion, sprintf("ALTER TABLE cantidad ADD PRIMARY KEY(c_cantidad)"))
+dbExecute(conexion, sprintf("ALTER TABLE precio_unitario ADD PRIMARY KEY(c_preciou)"))
+dbExecute(conexion, sprintf("ALTER TABLE total ADD PRIMARY KEY(c_valortotal)"))
+dbExecute(conexion, sprintf("ALTER TABLE ejecutora ADD FOREIGN KEY(c_pliego) REFERENCES pliego(c_pliego)"))
+dbExecute(conexion, sprintf("ALTER TABLE proveedor ADD FOREIGN KEY(c_pliego) REFERENCES pliego(c_pliego)"))
+dbExecute(conexion, sprintf("ALTER TABLE marca ADD FOREIGN KEY(c_grupo) REFERENCES pliego(c_grupo)"))
+dbExecute(conexion, sprintf("ALTER TABLE familia ADD FOREIGN KEY(c_grupo) REFERENCES pliego(c_grupo)"))
+dbExecute(conexion, sprintf("ALTER TABLE clase ADD FOREIGN KEY(c_grupo) REFERENCES pliego(c_grupo)"))
+dbExecute(conexion, sprintf("ALTER TABLE item ADD FOREIGN KEY(c_grupo) REFERENCES pliego(c_grupo)"))
+dbExecute(conexion, sprintf("ALTER TABLE cantidad ADD FOREIGN KEY(c_item) REFERENCES pliego(c_item)"))
+dbExecute(conexion, sprintf("ALTER TABLE precio_unitario ADD FOREIGN KEY(c_cantidad) REFERENCES pliego(c_cantidad)"))
+dbExecute(conexion, sprintf("ALTER TABLE total ADD FOREIGN KEY(c_precio) REFERENCES pliego(c_precio)"))
