@@ -10,6 +10,7 @@ consultas<-{
              hr(),
              dataTableOutput("tablaS3")
              ),
+    hr(),
     tabPanel("Codigo de consultas exploratorias",
              verbatimTextOutput("consulta2")
              )

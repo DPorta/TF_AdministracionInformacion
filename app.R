@@ -17,6 +17,8 @@ source("www/preprocesamiento.R")
 source("www/consultas.R")
 source("www/graficos.R")
 source("www/modelo.R")
+source("myLibrary.R")
+
 
 ui <- fluidPage(
   theme = shinytheme("cyborg"),
@@ -121,6 +123,27 @@ server <- function(input, output) {
   
   #CONSULTAS
   output$tablaS3 <- renderDataTable({
+    #limpieza
+    donaciones<-donaciones[,c(7,10,19,28,34,36,38,40,44,45,46,47)]
+    donaciones<-donaciones[-c(120:133),]
+    donaciones<-donaciones[-c(509:516),]
+    donaciones$PLIEGO_NOMBRE[donaciones$PLIEGO_NOMBRE==" "]<-"Desconocido"
+    
+    gestantes<-gestantes[,c(3,5,7:12,15:18,20,22:25)]
+    gestantes$Peso[gestantes$Peso == 0.0] <- mean(gestantes$Peso,na.rm = TRUE)
+    gestantes$Peso[gestantes$Peso >155] <- mean(gestantes$Peso,na.rm = TRUE)
+    
+    gestantes$Talla[gestantes$Talla == 0.0] <- mean(gestantes$Talla,na.rm = TRUE)
+    gestantes$Talla[gestantes$Talla >200] <- mean(gestantes$Talla,na.rm = TRUE)
+    
+    gestantes$Edad[gestantes$Edad < 13] <- mean(gestantes$Edad,na.rm = TRUE)
+    gestantes$Edad_Gestacional[gestantes$Edad_Gestacional < 13] <- mean(gestantes$Edad_Gestacional,na.rm = TRUE)
+    
+    gestantes$Hemoglobina[gestantes$Hemoglobina == 0.0] <- mean(gestantes$Hemoglobina,na.rm = TRUE)
+    gestantes$Hbc[gestantes$Hbc == 0.0] <- mean(gestantes$Hbc,na.rm = TRUE)
+    
+    ##
+    
     box<- input$selectdp
     if (is.null(box))
     {return(NULL)}
@@ -256,6 +279,28 @@ server <- function(input, output) {
   })
   #GRAFICOS
   output$plot1 <- renderPlot({
+    
+    #limpieza
+    donaciones<-donaciones[,c(7,10,19,28,34,36,38,40,44,45,46,47)]
+    donaciones<-donaciones[-c(120:133),]
+    donaciones<-donaciones[-c(509:516),]
+    donaciones$PLIEGO_NOMBRE[donaciones$PLIEGO_NOMBRE==" "]<-"Desconocido"
+    
+    gestantes<-gestantes[,c(3,5,7:12,15:18,20,22:25)]
+    gestantes$Peso[gestantes$Peso == 0.0] <- mean(gestantes$Peso,na.rm = TRUE)
+    gestantes$Peso[gestantes$Peso >155] <- mean(gestantes$Peso,na.rm = TRUE)
+    
+    gestantes$Talla[gestantes$Talla == 0.0] <- mean(gestantes$Talla,na.rm = TRUE)
+    gestantes$Talla[gestantes$Talla >200] <- mean(gestantes$Talla,na.rm = TRUE)
+    
+    gestantes$Edad[gestantes$Edad < 13] <- mean(gestantes$Edad,na.rm = TRUE)
+    gestantes$Edad_Gestacional[gestantes$Edad_Gestacional < 13] <- mean(gestantes$Edad_Gestacional,na.rm = TRUE)
+    
+    gestantes$Hemoglobina[gestantes$Hemoglobina == 0.0] <- mean(gestantes$Hemoglobina,na.rm = TRUE)
+    gestantes$Hbc[gestantes$Hbc == 0.0] <- mean(gestantes$Hbc,na.rm = TRUE)
+    
+    ##
+    
     box<- input$selectgg
     if (is.null(box))
     {return(NULL)}
@@ -455,32 +500,92 @@ server <- function(input, output) {
   })
   
   #MODELOS
-  observeEvent(input$control6, {
-    
-    if(input$control6==TRUE)
-    {toggle("consulta6")} else {toggle("consulta6")}
-    
-  })
+  
   output$consulta6 <- renderText({
-    "dtModeloR2<-data.frame(donaciones%>%group_by(DesDpto)%>%summarise(AHumanitarFam=sum(AHumanitarFam),EDanosVivienda=sum(EDanosVivienda)))
-dtModeloR2.1<-dtModeloR2%>%select(AHumanitarFam,EDanosVivienda)
-
-regresion2 <- lm(AHumanitarFam  ~  EDanosVivienda, data = dtModeloR2)
-summary(regresion2)
-    
-ggplot(dtModeloR2, aes(x=AHumanitarFam, y=EDanosVivienda)) + geom_point() + ggtitle('Gráfica de Regresion') + xlab('Ayuda Humanitaria por Familia') + ylab('Estimacion de Daños por Vivienda') + geom_smooth(method=lm)
-    "
+    "SOY UN TEXTITO    "
   })
   output$plot8 <- renderPlot({
+    #limpieza
+    donaciones<-donaciones[,c(7,10,19,28,34,36,38,40,44,45,46,47)]
+    donaciones<-donaciones[-c(120:133),]
+    donaciones<-donaciones[-c(509:516),]
+    donaciones$PLIEGO_NOMBRE[donaciones$PLIEGO_NOMBRE==" "]<-"Desconocido"
     
-    dtModelo1<-data.frame(gestantes%>%group_by(Distrito)%>%summarise(hemoglobina=sum(Hemoglobina), peso = sum(Peso)))
+    gestantes<-gestantes[,c(3,5,7:12,15:18,20,22:25)]
+    gestantes$Peso[gestantes$Peso == 0.0] <- mean(gestantes$Peso,na.rm = TRUE)
+    gestantes$Peso[gestantes$Peso >155] <- mean(gestantes$Peso,na.rm = TRUE)
     
-    return(
-      ggplot(dtModelo1, aes(x=hemoglobina, y=peso)) + geom_point() + ggtitle("Grafica de Regresion") + xlab("Hemoglobina") + ylab("Peso") + geom_smooth(method=lm)
-    )
+    gestantes$Talla[gestantes$Talla == 0.0] <- mean(gestantes$Talla,na.rm = TRUE)
+    gestantes$Talla[gestantes$Talla >200] <- mean(gestantes$Talla,na.rm = TRUE)
+    
+    gestantes$Edad[gestantes$Edad < 13] <- mean(gestantes$Edad,na.rm = TRUE)
+    gestantes$Edad_Gestacional[gestantes$Edad_Gestacional < 13] <- mean(gestantes$Edad_Gestacional,na.rm = TRUE)
+    
+    gestantes$Hemoglobina[gestantes$Hemoglobina == 0.0] <- mean(gestantes$Hemoglobina,na.rm = TRUE)
+    gestantes$Hbc[gestantes$Hbc == 0.0] <- mean(gestantes$Hbc,na.rm = TRUE)
+    
+    ##
+    
+    box<- input$selectMo
+    if (is.null(box))
+    {return(NULL)}
+    
+    if(box == "1")    {
+      gg1<-ggplot(gestantes, aes(x=Hemoglobina, y=Hbc)) + geom_point() + ggtitle("Grafica de Regresion: Hemoglobina vs Hbc") + xlab("Hemoglobina") + ylab("Peso") + geom_smooth(method=lm)
+      return (gg1)
+    } else  if(box == "2") {
+      gg2<-gg1
+      return (gg2)
+    } else  if(box == "3") {
+      gg3<-gg1
+      return (gg3)
+    } else  if(box == "4") { 
+      gg4<-gg1
+      return (gg4)
+    }
     
   })
-
+  output$plot9 <- renderDataTable({
+    #limpieza
+    donaciones<-donaciones[,c(7,10,19,28,34,36,38,40,44,45,46,47)]
+    donaciones<-donaciones[-c(120:133),]
+    donaciones<-donaciones[-c(509:516),]
+    donaciones$PLIEGO_NOMBRE[donaciones$PLIEGO_NOMBRE==" "]<-"Desconocido"
+    
+    gestantes<-gestantes[,c(3,5,7:12,15:18,20,22:25)]
+    gestantes$Peso[gestantes$Peso == 0.0] <- mean(gestantes$Peso,na.rm = TRUE)
+    gestantes$Peso[gestantes$Peso >155] <- mean(gestantes$Peso,na.rm = TRUE)
+    
+    gestantes$Talla[gestantes$Talla == 0.0] <- mean(gestantes$Talla,na.rm = TRUE)
+    gestantes$Talla[gestantes$Talla >200] <- mean(gestantes$Talla,na.rm = TRUE)
+    
+    gestantes$Edad[gestantes$Edad < 13] <- mean(gestantes$Edad,na.rm = TRUE)
+    gestantes$Edad_Gestacional[gestantes$Edad_Gestacional < 13] <- mean(gestantes$Edad_Gestacional,na.rm = TRUE)
+    
+    gestantes$Hemoglobina[gestantes$Hemoglobina == 0.0] <- mean(gestantes$Hemoglobina,na.rm = TRUE)
+    gestantes$Hbc[gestantes$Hbc == 0.0] <- mean(gestantes$Hbc,na.rm = TRUE)
+    
+    ##
+    
+    box<- input$selectMo
+    if (is.null(box))
+    {return(NULL)}
+    
+    if(box == "1")    {
+      dT1<-regresion(gestantes$Hemoglobina,gestantes$Hbc,8)
+      return (dT1)
+    } else  if(box == "2") {
+      dT2<-knn(df,35,70,1)
+      return (dT2)
+    } else  if(box == "3") {
+      dT3<-dT1
+      return (dT3)
+    } else  if(box == "4") { 
+      dT4<-dT1
+      return (dT4)
+    }
+    
+  })
   
 }
 

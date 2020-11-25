@@ -10,6 +10,7 @@ graficos<-{
              hr(),
              plotOutput('plot1')
              ),
+    hr(),
     tabPanel("Codigo de Graficos",
              verbatimTextOutput("consulta3")
              )
