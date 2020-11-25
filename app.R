@@ -21,7 +21,7 @@ source("myLibrary.R")
 
 
 ui <- fluidPage(
-  theme = shinytheme("cyborg"),
+  theme = shinytheme("superhero"),
   titlePanel( "Trabajo Final de Admin de la Informacion"),
   tabsetPanel(
               tabPanel("Presentacion",introduccion),
@@ -71,7 +71,7 @@ server <- function(input, output) {
 
   #PREPROCESAMIENTO
   observeEvent(input$control1, {
-   
+   write.csv(gestantes,"gestantes.csv")
     output$consulta1 <- renderText({
       'Codigo de limpieza de texto
       donaciones<-donaciones[,c(7,10,19,28,34,36,38,40,44,45,46,47)]

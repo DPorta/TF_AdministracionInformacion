@@ -6,7 +6,7 @@ recoleccion<-{sidebarLayout (
     fileInput("file1", "Seleccione Archivo",accept = c("text/csv","text/json",
                                                        "text/comma-separated-values,text/plain",".csv","XLSX file", 
                                                        ".json",".xlsx",".xls",".xml")),
-    helpText ( " Max. Tamaño de archivo: 30MB " )),
+    helpText ( " Max. Tamano de archivo: 30MB " )),
   mainPanel(
     tabsetPanel(  tabPanel("Info",tableOutput("tablaS6")),
                   tabPanel("Data",tableOutput("tablaS2"))
