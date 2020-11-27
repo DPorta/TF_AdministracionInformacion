@@ -11,8 +11,11 @@ consultas<-{
              dataTableOutput("tablaS3")
              ),
     hr(),
+    tabPanel("Interpretacion de graficos",
+             verbatimTextOutput("consulta4")
+             ),
+    hr(),
     tabPanel("Codigo de consultas exploratorias",
              verbatimTextOutput("consulta2")
              )
-
     )}

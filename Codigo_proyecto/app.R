@@ -244,6 +244,11 @@ server <- function(input, output) {
     } 
     
   })
+  output$consulta4<-renderText({
+    'Soy un textito
+    '
+    
+  })
   output$consulta2 <- renderText({
     
     '  CODIGO DE CONSULTAS
@@ -356,11 +361,11 @@ server <- function(input, output) {
       return (gr3)
     } else  if(box == "4") { 
       dplyr4_A<-gestantes%>%filter(Edad_Gestacional>30)%>%group_by(Dx_CLAP)
-      gr4 <- ggplot(dplyr4_A, aes(x=Edad_Gestacional, y = Dx_CLAP, fill=Edad_Gestacional))+geom_point(stat="Identity",position = "jitter", aes(color = Edad_Gestacional))+labs(title="Gestantes Mayores de 30 en funcion a las conclusiones de su peso",x="Edad Gestacional",y="Dx_CLAP")
+      gr4 <- ggplot(dplyr4_A, aes(x=Edad_Gestacional, y = Dx_CLAP, fill=Edad_Gestacional))+geom_bar(stat="Identity")+labs(title="Gestantes Mayores de 30 en funcion a las conclusiones de su peso",x="Cantidad de gestante",y="Dx_CLAP")
       return (gr4)
     } else  if(box == "5") { 
       dplyr5_A<-gestantes%>%filter(Hemoglobina<15 & Hemoglobina>5)%>%group_by(Dx_Anemia)
-      gr5 <- ggplot(dplyr5_A, aes(x=Dx_Anemia, y = Hemoglobina, fill(Hemoglobina)))+geom_violin()+geom_point(aes(color = Hemoglobina))+labs(title="Gestantes que presentan algun tipo de Anemia en base a su Talla",x="Tipo de Anemia",y="Hemoglobina")
+      gr5 <- ggplot(dplyr5_A, aes(x=Dx_Anemia, y = Hemoglobina, fill(Hemoglobina)))+geom_violin()+labs(title="Gestantes que presentan algun tipo de Anemia en base a su Talla",x="Tipo de Anemia",y="Hemoglobina")
       return (gr5)
     } else  if(box == "6") { 
       dplyr6_A<-gestantes%>%filter(Distrito == "PICHIRHUA")%>%group_by(PPG)
@@ -453,7 +458,7 @@ server <- function(input, output) {
       return (gr3)
     } else  if(box == "4") { 
       dplyr4_A<-gestantes%>%filter(Edad_Gestacional>30)%>%group_by(Dx_CLAP)
-      gr4 <- ggplot(dplyr4_A, aes(x=Edad_Gestacional, y = Dx_CLAP, fill=Edad_Gestacional))+geom_point(stat="Identity",position = "jitter", aes(color = Edad_Gestacional))+labs(title="Gestantes Mayores de 30 en funcion a las conclusiones de su peso",x="Edad Gestacional",y="Dx_CLAP")
+      gr4 <- ggplot(dplyr4_A, aes(x=Edad_Gestacional, y = Dx_CLAP, fill=Edad_Gestacional))+geom_bar(stat="Identity")+labs(title="Gestantes Mayores de 30 en funcion a las conclusiones de su peso",x="Edad Gestacional",y="Dx_CLAP")
       return (gr4)
     } else  if(box == "5") { 
       dplyr5_A<-gestantes%>%filter(Hemoglobina<15 & Hemoglobina>5)%>%group_by(Dx_Anemia)
