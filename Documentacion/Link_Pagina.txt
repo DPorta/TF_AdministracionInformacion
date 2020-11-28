@@ -1,1 +1,6 @@
+Link de página en internet:
 https://dporta.shinyapps.io/TF_AdmiInfo/
+Link de Database en PhpMyAdmin:
+	Link: http://3.91.204.191/phpmyadmin/
+	user: admin2
+	password: admin2

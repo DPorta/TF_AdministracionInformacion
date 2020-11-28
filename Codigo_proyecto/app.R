@@ -638,17 +638,20 @@ server <- function(input, output) {
     
     if(box == "1")    {
       " "
-    } else if(box == "2") {
+    }
+    if(box == "2") {
       output$modeloText<-renderText({
         'Segun los datos ingresados, la categoria es: '
       })
       output$modeloText2<-renderText({
         knn(newDf,15,153)
       })
-    } else if(box == "3") {
-      " "
-    } else if(box == "4") { 
-      " "
+    } 
+    if(box == "3") {
+      "  "
+    }
+    if(box == "4") { 
+      "  "
     }
     
     
