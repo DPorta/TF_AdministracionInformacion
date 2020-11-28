@@ -244,11 +244,6 @@ server <- function(input, output) {
     } 
     
   })
-  output$consulta4<-renderText({
-    'Soy un textito
-    '
-    
-  })
   output$consulta2 <- renderText({
     
     '  CODIGO DE CONSULTAS
@@ -365,11 +360,11 @@ server <- function(input, output) {
       return (gr4)
     } else  if(box == "5") { 
       dplyr5_A<-gestantes%>%filter(Hemoglobina<15 & Hemoglobina>5)%>%group_by(Dx_Anemia)
-      gr5 <- ggplot(dplyr5_A, aes(x=Dx_Anemia, y = Hemoglobina, fill(Hemoglobina)))+geom_violin()+labs(title="Gestantes que presentan algun tipo de Anemia en base a su Talla",x="Tipo de Anemia",y="Hemoglobina")
+      gr5 <- ggplot(dplyr5_A, aes(x=Dx_Anemia, y = Hemoglobina, fill(Hemoglobina)))+geom_boxplot()+labs(title="Gestantes que presentan algun tipo de Anemia en base a su hemoglobina",x="Tipo de Anemia",y="Hemoglobina")
       return (gr5)
     } else  if(box == "6") { 
       dplyr6_A<-gestantes%>%filter(Distrito == "PICHIRHUA")%>%group_by(PPG)
-      gr6<-ggplot(dplyr6_A, aes(x = PPG, y = Distrito, fill =PPG))+geom_jitter(aes(color = PPG))+labs(title="Dispercion de Gestantes segun PPG en el Distrito Pichirhua",x="PPC",y="Distrito")
+      gr6<-ggplot(dplyr6_A, aes(x = PPG, y = Distrito, fill =PPG))+geom_jitter(aes(color = PPG))+labs(title="Dispercion de Gestantes segun PPG en el Distrito Pichirhua",x="PPG",y="Distrito")
       return (gr6)
     } else  if(box == "7") { 
       dplyr7_A<-gestantes%>%filter(Provincia == "ABANCAY")%>%group_by(Dx_IOM)
@@ -462,7 +457,7 @@ server <- function(input, output) {
       return (gr4)
     } else  if(box == "5") { 
       dplyr5_A<-gestantes%>%filter(Hemoglobina<15 & Hemoglobina>5)%>%group_by(Dx_Anemia)
-      gr5 <- ggplot(dplyr5_A, aes(x=Dx_Anemia, y = Hemoglobina, fill(Hemoglobina)))+geom_violin()+geom_point(aes(color = Hemoglobina))+labs(title="Gestantes que presentan algun tipo de Anemia en base a su Talla",x="Tipo de Anemia",y="Hemoglobina")
+      gr5 <- ggplot(dplyr5_A, aes(x=Dx_Anemia, y = Hemoglobina, fill(Hemoglobina)))+geom_boxplot()+labs(title="Gestantes que presentan algun tipo de Anemia en base a su hemoglobina",x="Tipo de Anemia",y="Hemoglobina")
       return (gr5)
     } else  if(box == "6") { 
       dplyr6_A<-gestantes%>%filter(Distrito == "PICHIRHUA")%>%group_by(PPG)
